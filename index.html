@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="inputs" default="dhaka" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-danger"  id="btns" >Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" id="icon" alt="">
+            <h1 id="city">New York</h1>
+            <h3><span id="tem">12.30</span>&deg;C</h3>
+            <h1 class="lead" id="description">Haze</h1>
+        </div>
+    </div>
+    <p class="text-warning fixed-bottom text-right mr-3">Developed By: <a href="https://arabid.dev" class="text-success" target="_blank">A.R.ABID</a></p>
+<script>
+        const submit_value = document.getElementById("btns");
+        submit_value.addEventListener("click",function(){
+            const input_valued = document.getElementById("inputs").value;
+          console.log(input_valued);
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input_valued}&appid=3cc7ad6d53ba9a4712af6ea20edf771a&units=metric`)
+           
+        .then(response=>response.json())
+        .then(data=>{
+           const cityname =  data.name;
+           const temp = data.main.temp;
+           const des = data.weather[0].description;
+
+           document.getElementById('icon').setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+           document.getElementById("city").innerText = cityname;
+           document.getElementById("tem").innerText = temp;
+           document.getElementById("description").innerText = des;
+           document.getElementById("inputs").value = "";
+            
+        })
+
+        })
+        
+ 
+</script>
+</body>
+
+</html>
